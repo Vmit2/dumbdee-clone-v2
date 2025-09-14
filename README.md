@@ -1,6 +1,98 @@
-# DumbDee Clone - Modern Dropshipping Platform
+# DumbDee E-commerce Platform - Full-Stack Clone
 
-A complete clone of the DumbDee dropshipping website built with modern technologies including React 19, TypeScript, NestJS, and MongoDB.
+This repository contains a full-stack clone of the DumbDee e-commerce website, built with a modern technology stack. The project includes a complete frontend, backend, seller dashboard, payment integration, and advanced features like multilingual support and location-based services.
+
+## ✨ Features
+
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS
+- **Backend**: NestJS, MongoDB, Redis
+- **Seller Dashboard**: Full-featured marketplace for sellers to manage products, orders, and analytics.
+- **Payment Integration**: PayPal (International) and Razorpay (India) with automatic location-based selection.
+- **Location-Based Features**: Geolocation detection, localized content, and feature toggles using Flagsmith.
+- **Multilingual Support**: i18n setup with 6 languages (English, Spanish, French, German, Hindi, Chinese).
+- **Image Storage**: AWS S3 for product images, seller profiles, and other assets.
+- **Deployment**: Dockerized setup with Nginx for production, and a comprehensive deployment script.
+- **Authentication**: JWT-based authentication for both users and sellers.
+
+## 🚀 Live Demo
+
+[Link to Live Demo](https://your-deployment-url.com)
+
+## 📸 Screenshots
+
+| Homepage | Seller Dashboard | Checkout |
+|---|---|---|
+| ![Homepage](https://i.imgur.com/your-homepage-screenshot.png) | ![Seller Dashboard](https://i.imgur.com/your-dashboard-screenshot.png) | ![Checkout](https://i.imgur.com/your-checkout-screenshot.png) |
+
+## 🛠️ Technologies Used
+
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS, React Query, React Hook Form, i18next
+- **Backend**: NestJS, MongoDB, Mongoose, Passport.js, JWT
+- **Database**: MongoDB, Redis (for caching)
+- **Storage**: AWS S3
+- **Payments**: PayPal, Razorpay
+- **Deployment**: Docker, Nginx, PM2
+- **Tooling**: pnpm, Vite, ESLint, Prettier
+
+## 📦 Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm
+- Docker and Docker Compose
+- AWS Account and S3 Bucket
+- PayPal and Razorpay Developer Accounts
+
+### Installation
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/your-username/dumbdee-clone.git
+    cd dumbdee-clone
+    ```
+
+2.  **Setup development environment:**
+
+    ```bash
+    ./deploy.sh setup-dev
+    ```
+
+3.  **Configure environment variables:**
+
+    Create `.env` files in both `frontend` and `backend` directories by copying from the `.env.example` files and filling in your credentials.
+
+4.  **Start the development servers:**
+
+    ```bash
+    ./deploy.sh start-dev
+    ```
+
+    - Frontend will be available at `http://localhost:5173`
+    - Backend will be available at `http://localhost:3001`
+
+### Docker Deployment
+
+```bash
+docker-compose up -d
+```
+
+- Frontend will be available at `http://localhost:3000`
+- Backend will be available at `http://localhost:3001`
+
+## 📝 API Documentation
+
+API documentation is available via Swagger at `http://localhost:3001/api`.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a pull request.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 
 ## 🚀 Features
 
