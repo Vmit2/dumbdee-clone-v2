@@ -1,0 +1,80 @@
+{
+  "brand": {
+    "name": "DumbDee",
+    "tagline": "时尚女装、时髦男士配饰和可爱童装",
+    "description": "您全家时尚服装和配饰的一站式目的地。"
+  },
+  "navigation": {
+    "shop": "商店",
+    "men": "男装",
+    "women": "女装",
+    "kids": "童装",
+    "categories": "分类",
+    "search": "搜索产品",
+    "login": "登录",
+    "register": "注册",
+    "logout": "退出",
+    "account": "我的账户",
+    "cart": "购物车",
+    "wishlist": "心愿单",
+    "orders": "订单",
+    "profile": "个人资料",
+    "settings": "设置"
+  },
+  "seller": {
+    "become_seller": "在DumbDee销售",
+    "dashboard": "卖家仪表板",
+    "login": "卖家登录",
+    "register": "成为卖家",
+    "products": "产品",
+    "orders": "订单",
+    "analytics": "分析",
+    "revenue": "收入",
+    "customers": "客户",
+    "inventory": "库存"
+  },
+  "homepage": {
+    "hero": {
+      "title": "限量发布",
+      "subtitle": "优惠",
+      "offer": "10%折扣 + 抢先体验",
+      "description": "成为第一个购买我们全新系列的人。",
+      "countdown": "仅7天享受此优惠 - 错过就没有了！",
+      "cta": "立即预订"
+    }
+  },
+  "location": {
+    "welcome": "欢迎来到DumbDee {{country}}！{{flag}}",
+    "shopping_from": "从{{city}}购物？",
+    "free_shipping": "订单满{{amount}}免费送货！",
+    "payment_methods": "{{methods}}可用",
+    "support_hours": "客服：{{hours}}"
+  },
+  "language": {
+    "select": "选择语言",
+    "current": "当前语言",
+    "change": "更改语言",
+    "languages": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch", 
+      "hi": "हिन्दी",
+      "zh": "中文"
+    }
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "yes": "是",
+    "no": "否",
+    "ok": "确定",
+    "cancel": "取消",
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "search": "搜索"
+  }
+}
+

@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import LanguageSelector from './LanguageSelector'
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -127,16 +128,18 @@ const Header = () => {
             </div>
           </form>
 
-          {/* User Actions */}
+          {/* Right side actions */}
           <div className="flex items-center space-x-4">
-            <Link to="/seller/register" className="text-gray-700 hover:text-purple-600 font-medium">
+            <Link to="/seller/register" className="text-purple-600 hover:text-purple-700 font-medium text-sm">
               Sell on DumbDee
             </Link>
-            
+
+            <LanguageSelector variant="compact" />
+
             <Link to="/login" className="text-gray-700 hover:text-purple-600 font-medium">
               Login
             </Link>
-            
+
             <Link to="/wishlist" className="relative">
               <Heart className="h-6 w-6 text-gray-700 hover:text-purple-600" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
