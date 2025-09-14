@@ -12,6 +12,7 @@ import RegisterPage from './pages/RegisterPage'
 import SellerDashboard from './pages/SellerDashboard'
 import SellerLogin from './pages/SellerLogin'
 import SellerRegister from './pages/SellerRegister'
+import CheckoutPage from './pages/CheckoutPage'
 import './App.css'
 
 // Create a client
@@ -38,6 +39,7 @@ function App() {
               <Route path="/kids" element={<CategoryPage category="kids" />} />
               <Route path="/product/:id" element={<ProductPage />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/wishlist" element={<WishlistPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
