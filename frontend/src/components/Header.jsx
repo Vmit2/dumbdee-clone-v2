@@ -129,6 +129,10 @@ const Header = () => {
 
           {/* User Actions */}
           <div className="flex items-center space-x-4">
+            <Link to="/seller/register" className="text-gray-700 hover:text-purple-600 font-medium">
+              Sell on DumbDee
+            </Link>
+            
             <Link to="/login" className="text-gray-700 hover:text-purple-600 font-medium">
               Login
             </Link>

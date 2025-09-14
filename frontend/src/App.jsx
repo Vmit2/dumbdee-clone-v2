@@ -9,6 +9,9 @@ import CartPage from './pages/CartPage'
 import WishlistPage from './pages/WishlistPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import SellerDashboard from './pages/SellerDashboard'
+import SellerLogin from './pages/SellerLogin'
+import SellerRegister from './pages/SellerRegister'
 import './App.css'
 
 // Create a client
@@ -38,6 +41,9 @@ function App() {
               <Route path="/wishlist" element={<WishlistPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/seller/dashboard" element={<SellerDashboard />} />
+              <Route path="/seller/login" element={<SellerLogin />} />
+              <Route path="/seller/register" element={<SellerRegister />} />
             </Routes>
           </main>
           <Toaster 
