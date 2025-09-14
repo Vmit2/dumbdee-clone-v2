@@ -5,33 +5,54 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { CreditCard, MapPin, CheckCircle } from 'lucide-react'
+import { useLocation, useCurrency } from '../hooks/useLocation'
+import { usePaymentFeatures } from '../hooks/useFeatureToggle'
 
 const PaymentGateway = ({ 
   amount, 
   currency = 'USD', 
   onSuccess, 
   onError, 
-  orderDetails,
-  userLocation = null 
+  orderDetails
 }) => {
+  const { location, isCountry } = useLocation()
+  const { formatPrice, currency: userCurrency } = useCurrency()
+  const { paypal, razorpay, applePay, googlePay, availableMethods } = usePaymentFeatures()
+  
   const [paymentMethod, setPaymentMethod] = useState('paypal')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
 
-  // Detect user location and set appropriate payment method
+  // Auto-select payment method based on location and available features
   useEffect(() => {
-    if (userLocation?.country === 'IN' || userLocation?.country === 'India') {
+    if (isCountry('IN') && razorpay) {
       setPaymentMethod('razorpay')
-    } else {
+    } else if (paypal) {
       setPaymentMethod('paypal')
+    } else if (availableMethods.length > 0) {
+      setPaymentMethod(availableMethods[0])
     }
-  }, [userLocation])
+  }, [location, paypal, razorpay, availableMethods, isCountry])
+
+  // Use user's currency if not specified
+  const displayCurrency = currency === 'USD' ? userCurrency : currency
+  
+  // Simple currency conversion helper
+  const convertCurrencyAmount = (amount, from, to) => {
+    const rates = { USD: 1, EUR: 0.85, GBP: 0.73, INR: 83.12, JPY: 149.50 }
+    const fromRate = rates[from] || 1
+    const toRate = rates[to] || 1
+    return (amount / fromRate) * toRate
+  }
+  
+  const displayAmount = currency === 'USD' && userCurrency !== 'USD' ? 
+    convertCurrencyAmount(amount, 'USD', userCurrency) : amount
 
   // PayPal configuration
   const paypalOptions = {
     'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID || 'test',
-    currency: currency,
+    currency: displayCurrency,
     intent: 'capture'
   }
 
@@ -46,8 +67,8 @@ const PaymentGateway = ({
     script.onload = () => {
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_1234567890',
-        amount: amount * 100, // Razorpay expects amount in paise
-        currency: 'INR',
+        amount: displayAmount * 100, // Razorpay expects amount in paise
+        currency: displayCurrency === 'INR' ? 'INR' : 'INR', // Razorpay primarily supports INR
         name: 'DumbDee',
         description: `Order #${orderDetails?.orderId || 'DDD-' + Date.now()}`,
         image: '/favicon.ico',
@@ -138,12 +159,12 @@ const PaymentGateway = ({
           <CreditCard className="h-5 w-5" />
           Payment Details
         </CardTitle>
-        {userLocation && (
+        {location && (
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <MapPin className="h-4 w-4" />
-            {userLocation.country}
+            {location.city}, {location.country}
             <Badge variant="outline" className="ml-2">
-              {paymentMethod === 'razorpay' ? 'Razorpay' : 'PayPal'}
+              {paymentMethod === 'razorpay' ? 'Razorpay' : paymentMethod === 'paypal' ? 'PayPal' : paymentMethod.toUpperCase()}
             </Badge>
           </div>
         )}
@@ -160,7 +181,7 @@ const PaymentGateway = ({
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm text-gray-600">Order Total:</span>
             <span className="font-semibold">
-              {paymentMethod === 'razorpay' ? '₹' : '$'}{amount}
+              {formatPrice(displayAmount, displayCurrency)}
             </span>
           </div>
           {orderDetails?.items && (
@@ -172,23 +193,47 @@ const PaymentGateway = ({
 
         {/* Payment Method Selection */}
         <div className="space-y-3">
-          <div className="flex gap-2">
-            <Button
-              variant={paymentMethod === 'paypal' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setPaymentMethod('paypal')}
-              className="flex-1"
-            >
-              PayPal
-            </Button>
-            <Button
-              variant={paymentMethod === 'razorpay' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setPaymentMethod('razorpay')}
-              className="flex-1"
-            >
-              Razorpay
-            </Button>
+          <div className="flex gap-2 flex-wrap">
+            {paypal && (
+              <Button
+                variant={paymentMethod === 'paypal' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setPaymentMethod('paypal')}
+                className="flex-1 min-w-[100px]"
+              >
+                PayPal
+              </Button>
+            )}
+            {razorpay && (
+              <Button
+                variant={paymentMethod === 'razorpay' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setPaymentMethod('razorpay')}
+                className="flex-1 min-w-[100px]"
+              >
+                Razorpay
+              </Button>
+            )}
+            {applePay && (
+              <Button
+                variant={paymentMethod === 'apple_pay' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setPaymentMethod('apple_pay')}
+                className="flex-1 min-w-[100px]"
+              >
+                Apple Pay
+              </Button>
+            )}
+            {googlePay && (
+              <Button
+                variant={paymentMethod === 'google_pay' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setPaymentMethod('google_pay')}
+                className="flex-1 min-w-[100px]"
+              >
+                Google Pay
+              </Button>
+            )}
           </div>
 
           {/* PayPal Payment */}
@@ -237,7 +282,7 @@ const PaymentGateway = ({
                 disabled={loading}
                 className="w-full bg-blue-600 hover:bg-blue-700"
               >
-                {loading ? 'Processing...' : `Pay ₹${amount} with Razorpay`}
+                {loading ? 'Processing...' : `Pay ${formatPrice(displayAmount, displayCurrency)} with Razorpay`}
               </Button>
               <p className="text-xs text-gray-500 text-center">
                 Secure payment powered by Razorpay

@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Heart, Star } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
 import CategoryCard from '../components/CategoryCard'
+import LocationBanner from '../components/LocationBanner'
 
 const HomePage = () => {
   const [hotPicks, setHotPicks] = useState([])
@@ -109,6 +110,9 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Location Banner */}
+      <LocationBanner />
+      
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-green-200 to-blue-300 py-20">
         <div className="container mx-auto px-4">
