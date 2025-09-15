@@ -11,4 +11,14 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    port: 3002,
+    host: true,
+    strictPort: true,
+    hmr: {
+      host: 'localhost',
+      port: 3002,
+      protocol: 'ws',
+    },
+  },
 })

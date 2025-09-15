@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { X, Cookie, Shield, BarChart3 } from 'lucide-react'
-import { PrimaryButton, SecondaryButton } from './ui/Button'
+import { Button } from './ui/button'
 import analyticsService from '../services/analytics'
 
 const CookieConsent = () => {
@@ -208,28 +208,30 @@ const CookieConsent = () => {
 
         {/* Footer */}
         <div className="flex flex-col sm:flex-row gap-3 p-6 border-t border-gray-200">
-          <SecondaryButton
+          <Button
+            variant="outline"
             onClick={handleRejectAll}
             className="flex-1"
           >
             Reject All
-          </SecondaryButton>
+          </Button>
           
           {showDetails && (
-            <SecondaryButton
+            <Button
+              variant="outline"
               onClick={handleAcceptSelected}
               className="flex-1"
             >
               Save Preferences
-            </SecondaryButton>
+            </Button>
           )}
           
-          <PrimaryButton
+          <Button
             onClick={handleAcceptAll}
             className="flex-1"
           >
             Accept All
-          </PrimaryButton>
+          </Button>
         </div>
 
         {/* Privacy Policy Link */}

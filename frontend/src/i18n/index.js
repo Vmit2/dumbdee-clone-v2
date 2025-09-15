@@ -93,7 +93,7 @@ i18n
     defaultNS: 'common',
     
     // Debug mode (disable in production)
-    debug: process.env.NODE_ENV === 'development',
+    debug: import.meta.env.DEV,
     
     // Language detection
     detection: detectionOptions,
@@ -165,12 +165,12 @@ i18n
     postProcess: false,
     
     // Save missing keys
-    saveMissing: process.env.NODE_ENV === 'development',
+    saveMissing: import.meta.env.DEV,
     saveMissingTo: 'fallback',
     
     // Missing key handler
     missingKeyHandler: (lng, ns, key, fallbackValue) => {
-      if (process.env.NODE_ENV === 'development') {
+      if (import.meta.env.DEV) {
         console.warn(`Missing translation key: ${key} for language: ${lng}`)
       }
     },

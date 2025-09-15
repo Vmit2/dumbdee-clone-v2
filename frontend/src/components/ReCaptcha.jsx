@@ -3,7 +3,7 @@ import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recapt
 
 // ReCAPTCHA Provider Component
 export const ReCaptchaProvider = ({ children }) => {
-  const reCaptchaKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY
+  const reCaptchaKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY
 
   if (!reCaptchaKey) {
     console.warn('reCAPTCHA site key not found in environment variables')

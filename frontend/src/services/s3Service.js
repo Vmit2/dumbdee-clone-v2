@@ -3,15 +3,15 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 
 // AWS S3 Configuration
 const S3_CONFIG = {
-  region: process.env.REACT_APP_AWS_REGION || 'us-east-1',
+  region: import.meta.env.VITE_AWS_REGION || 'us-east-1',
   credentials: {
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY || ''
+    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID || '',
+    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY || ''
   }
 }
 
-const BUCKET_NAME = process.env.REACT_APP_S3_BUCKET_NAME || 'dumbdee-images'
-const CDN_URL = process.env.REACT_APP_CDN_URL || `https://${BUCKET_NAME}.s3.amazonaws.com`
+const BUCKET_NAME = import.meta.env.VITE_S3_BUCKET_NAME || 'dumbdee-images'
+const CDN_URL = import.meta.env.VITE_CDN_URL || `https://${BUCKET_NAME}.s3.amazonaws.com`
 
 // Initialize S3 Client
 const s3Client = new S3Client(S3_CONFIG)

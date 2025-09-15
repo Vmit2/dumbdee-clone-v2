@@ -1,10 +1,10 @@
-import { gtag } from 'gtag'
+// Analytics service without external window.gtag dependency
 
 class AnalyticsService {
   constructor() {
     this.isInitialized = false
-    this.trackingId = process.env.REACT_APP_GOOGLE_ANALYTICS_ID
-    this.debugMode = process.env.NODE_ENV === 'development'
+    this.trackingId = import.meta.env.VITE_GOOGLE_ANALYTICS_ID
+    this.debugMode = import.meta.env.DEV
   }
 
   // Initialize Google Analytics
@@ -19,20 +19,20 @@ class AnalyticsService {
     }
 
     try {
-      // Load gtag script
+      // Load window.gtag script
       const script = document.createElement('script')
       script.async = true
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${this.trackingId}`
+      script.src = `https://www.googletagmanager.com/window.gtag/js?id=${this.trackingId}`
       document.head.appendChild(script)
 
-      // Initialize gtag
+      // Initialize window.gtag
       window.dataLayer = window.dataLayer || []
-      window.gtag = function() {
+      window.window.gtag = function() {
         window.dataLayer.push(arguments)
       }
 
-      gtag('js', new Date())
-      gtag('config', this.trackingId, {
+      window.window.gtag('js', new Date())
+      window.window.gtag('config', this.trackingId, {
         debug_mode: this.debugMode,
         send_page_view: false, // We'll handle page views manually
       })
@@ -52,7 +52,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('config', this.trackingId, {
+      window.window.gtag('config', this.trackingId, {
         page_path: path,
         page_title: title,
       })
@@ -70,7 +70,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', action, {
+      window.gtag('event', action, {
         event_category: category,
         event_label: label,
         value: value,
@@ -89,7 +89,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'purchase', {
+      window.gtag('event', 'purchase', {
         transaction_id: transactionId,
         value: value,
         currency: currency,
@@ -115,7 +115,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'add_to_cart', {
+      window.gtag('event', 'add_to_cart', {
         currency: currency,
         value: item.price * item.quantity,
         items: [{
@@ -140,7 +140,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'remove_from_cart', {
+      window.gtag('event', 'remove_from_cart', {
         currency: currency,
         value: item.price * item.quantity,
         items: [{
@@ -165,7 +165,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'view_item', {
+      window.gtag('event', 'view_item', {
         currency: currency,
         value: item.price,
         items: [{
@@ -189,7 +189,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'search', {
+      window.gtag('event', 'search', {
         search_term: searchTerm,
         category: category,
       })
@@ -207,7 +207,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'sign_up', {
+      window.gtag('event', 'sign_up', {
         method: method,
       })
 
@@ -224,7 +224,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'login', {
+      window.gtag('event', 'login', {
         method: method,
       })
 
@@ -241,7 +241,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'begin_checkout', {
+      window.gtag('event', 'begin_checkout', {
         currency: currency,
         value: value,
         items: items.map(item => ({
@@ -266,7 +266,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'add_payment_info', {
+      window.gtag('event', 'add_payment_info', {
         currency: currency,
         value: value,
       })
@@ -284,7 +284,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'seller_action', {
+      window.gtag('event', 'seller_action', {
         event_category: 'Seller',
         event_label: action,
         seller_id: sellerId,
@@ -304,7 +304,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'admin_action', {
+      window.gtag('event', 'admin_action', {
         event_category: 'Admin',
         event_label: action,
         admin_id: adminId,
@@ -325,7 +325,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'form_submit', {
+      window.gtag('event', 'form_submit', {
         event_category: 'Form',
         event_label: formName,
         success: success,
@@ -344,7 +344,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'file_download', {
+      window.gtag('event', 'file_download', {
         event_category: 'Download',
         event_label: fileName,
         file_type: fileType,
@@ -363,7 +363,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('event', 'share', {
+      window.gtag('event', 'share', {
         method: method,
         content_type: contentType,
         content_id: contentId,
@@ -382,7 +382,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('config', this.trackingId, {
+      window.gtag('config', this.trackingId, {
         user_properties: properties,
       })
 
@@ -399,7 +399,7 @@ class AnalyticsService {
     if (!this.isInitialized) return
 
     try {
-      gtag('config', this.trackingId, {
+      window.gtag('config', this.trackingId, {
         user_id: userId,
       })
 

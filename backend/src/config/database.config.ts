@@ -11,8 +11,6 @@ export class DatabaseConfig implements MongooseOptionsFactory {
     
     return {
       uri,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       retryWrites: true,
       w: 'majority',
       // Connection pool settings

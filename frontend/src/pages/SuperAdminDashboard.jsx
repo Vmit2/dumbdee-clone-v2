@@ -39,7 +39,7 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts'
-import { PrimaryButton, SecondaryButton, TertiaryButton } from '../components/ui/Button'
+import { Button } from '../components/ui/button'
 import {
   fetchAllSellers,
   fetchAllUsers,
@@ -193,13 +193,13 @@ const SuperAdminDashboard = () => {
                 <option value="1y">Last year</option>
               </select>
               
-              <PrimaryButton
-                leftIcon={<Download className="h-4 w-4" />}
+              <Button
                 size="sm"
                 onClick={() => analyticsService.trackAdminAction('export_data', 'super_admin', 'dashboard', activeTab)}
               >
+                <Download className="h-4 w-4 mr-2" />
                 Export
-              </PrimaryButton>
+              </Button>
             </div>
           </div>
         </div>
@@ -540,22 +540,23 @@ const SellersTab = ({ sellers, onVerify, searchTerm, setSearchTerm, statusFilter
                     {new Date(seller.createdAt).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                    <TertiaryButton
+                    <Button
+                      variant="outline"
                       size="sm"
-                      leftIcon={<Eye className="h-4 w-4" />}
                       onClick={() => onVerify(seller)}
                     >
+                      <Eye className="h-4 w-4 mr-2" />
                       Review
-                    </TertiaryButton>
+                    </Button>
                     
                     {seller.verificationStatus === 'pending' && (
-                      <PrimaryButton
+                      <Button
                         size="sm"
-                        leftIcon={<CheckCircle className="h-4 w-4" />}
                         onClick={() => onVerify(seller)}
                       >
+                        <CheckCircle className="h-4 w-4 mr-2" />
                         Verify
-                      </PrimaryButton>
+                      </Button>
                     )}
                   </td>
                 </tr>
@@ -672,19 +673,20 @@ const VerificationModal = ({ isOpen, type, data, onSubmit, onClose }) => {
             </div>
             
             <div className="flex space-x-3 pt-4">
-              <SecondaryButton
+              <Button
+                variant="outline"
                 type="button"
                 onClick={onClose}
                 className="flex-1"
               >
                 Cancel
-              </SecondaryButton>
-              <PrimaryButton
+              </Button>
+              <Button
                 type="submit"
                 className="flex-1"
               >
                 Submit
-              </PrimaryButton>
+              </Button>
             </div>
           </form>
         </div>

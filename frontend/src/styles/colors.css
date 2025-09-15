@@ -1,4 +1,4 @@
-/* DumbDee Brand Colors */
+/* DumbDee Brand Colors aligned with logo (#26275F navy, #C0842B golden) */
 :root {
   /* Primary Brand Colors */
   --dumbdee-navy: #26275F;
@@ -66,6 +66,7 @@
   transform: translateY(-1px);
   box-shadow: 0 4px 12px var(--dumbdee-golden-300);
 }
+
 
 .btn-secondary {
   background: var(--color-white);

@@ -3,7 +3,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as cors from 'cors';
-import * as helmet from 'helmet';
+import helmet from 'helmet';
 import * as compression from 'compression';
 
 async function bootstrap() {
@@ -50,7 +50,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   // Start server
-  const port = process.env.PORT || 3001;
+  const port = process.env.PORT || 3004;
   await app.listen(port, '0.0.0.0');
   
   console.log(`🚀 DumbDee Clone API is running on: http://localhost:${port}`);

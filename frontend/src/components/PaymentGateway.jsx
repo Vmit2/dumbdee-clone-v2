@@ -51,7 +51,7 @@ const PaymentGateway = ({
 
   // PayPal configuration
   const paypalOptions = {
-    'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID || 'test',
+    'client-id': import.meta.env.VITE_PAYPAL_CLIENT_ID || 'test',
     currency: displayCurrency,
     intent: 'capture'
   }

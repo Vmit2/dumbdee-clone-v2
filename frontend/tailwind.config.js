@@ -7,21 +7,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        // DumbDee Brand Colors
+        // DumbDee Brand Colors (simplified)
         'dumbdee-navy': {
-          DEFAULT: '#26275F',
-          50: 'rgba(38, 39, 95, 0.05)',
-          100: 'rgba(38, 39, 95, 0.1)',
-          200: 'rgba(38, 39, 95, 0.2)',
-          300: 'rgba(38, 39, 95, 0.3)',
-          400: 'rgba(38, 39, 95, 0.4)',
-          500: '#26275F',
-          600: 'rgba(38, 39, 95, 0.7)',
-          700: 'rgba(38, 39, 95, 0.8)',
-          800: 'rgba(38, 39, 95, 0.9)',
-          900: '#1A1B45',
-          light: '#3A3B7A',
-          dark: '#1A1B45',
+          DEFAULT: '#000000',
+          50: 'rgba(0, 0, 0, 0.05)',
+          100: 'rgba(0, 0, 0, 0.1)',
+          200: 'rgba(0, 0, 0, 0.2)',
+          300: 'rgba(0, 0, 0, 0.3)',
+          400: 'rgba(0, 0, 0, 0.4)',
+          500: '#000000',
+          600: 'rgba(0, 0, 0, 0.7)',
+          700: 'rgba(0, 0, 0, 0.8)',
+          800: 'rgba(0, 0, 0, 0.9)',
+          900: '#000000',
+          light: '#1a1a1a',
+          dark: '#000000',
         },
         'dumbdee-golden': {
           DEFAULT: '#C0842B',
@@ -40,11 +40,11 @@ export default {
         },
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #26275F 0%, #3A3B7A 100%)',
+        'gradient-primary': 'linear-gradient(135deg, #C0842B 0%, #D4A555 100%)',
         'gradient-golden': 'linear-gradient(135deg, #C0842B 0%, #D4A555 100%)',
         'gradient-golden-reverse': 'linear-gradient(135deg, #D4A555 0%, #C0842B 100%)',
-        'gradient-navy-golden': 'linear-gradient(135deg, #26275F 0%, #C0842B 100%)',
-        'gradient-golden-navy': 'linear-gradient(135deg, #C0842B 0%, #26275F 100%)',
+        'gradient-navy-golden': 'linear-gradient(135deg, #000000 0%, #C0842B 100%)',
+        'gradient-golden-navy': 'linear-gradient(135deg, #C0842B 0%, #000000 100%)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -137,18 +137,10 @@ export default {
                 color: '#A66B1F',
               },
             },
-            h1: {
-              color: '#26275F',
-            },
-            h2: {
-              color: '#26275F',
-            },
-            h3: {
-              color: '#26275F',
-            },
-            h4: {
-              color: '#26275F',
-            },
+            h1: { color: '#000000' },
+            h2: { color: '#000000' },
+            h3: { color: '#000000' },
+            h4: { color: '#000000' },
           },
         },
       },
