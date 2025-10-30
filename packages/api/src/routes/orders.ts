@@ -8,6 +8,12 @@ ordersRouter.get("/", requireAuth(["admin", "staff", "vendor"]), async (_req, re
   res.json(await OrderModel.find({}).limit(100));
 });
 
+ordersRouter.get("/mine", requireAuth(["customer"]), async (req, res) => {
+  const userId = (req as any).user?.sub;
+  const rows = await OrderModel.find({ user_id: userId }).limit(100);
+  res.json(rows);
+});
+
 ordersRouter.post("/", requireAuth(["admin", "customer"]), async (req, res) => {
   const created = await OrderModel.create(req.body);
   res.status(201).json(created);
