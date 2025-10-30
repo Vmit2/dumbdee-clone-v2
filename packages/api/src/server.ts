@@ -18,6 +18,7 @@ import { wishlistRouter } from "./routes/wishlist";
 import { couponsRouter } from "./routes/coupons";
 import { paymentsRouter } from "./routes/payments";
 import { shippingRouter } from "./routes/shipping";
+import { notificationsRouter } from "./routes/notifications";
 
 const app = express();
 app.use(helmet());
@@ -41,6 +42,7 @@ app.use("/api/v1/wishlist", wishlistRouter);
 app.use("/api/v1/coupons", couponsRouter);
 app.use("/api/v1/payments", paymentsRouter);
 app.use("/api/v1/shipping", shippingRouter);
+app.use("/api/v1/notifications", notificationsRouter);
 
 const port = Number(process.env.PORT || 4000);
 const mongoUri = process.env.MONGO_URI || "mongodb://localhost:27017/dumbdee";
