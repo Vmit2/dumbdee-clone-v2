@@ -9,7 +9,7 @@ const jwks = issuer ? createRemoteJWKSet(new URL(`${issuer}/v1/keys`)) : undefin
 export interface AuthUser {
   sub: string;
   email?: string;
-  roles?: string[];
+  roles?: ("superadmin"|"admin"|"support"|"vendor"|"customer"|"staff")[];
 }
 
 export function requireAuth(roles?: string[]) {

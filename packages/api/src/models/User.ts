@@ -4,7 +4,7 @@ const UserSchema = new Schema(
   {
     email: { type: String, required: true, unique: true },
     name: String,
-    role: { type: String, enum: ["admin", "vendor", "customer", "staff"], default: "customer" },
+    role: { type: String, enum: ["superadmin", "admin", "support", "vendor", "customer", "staff"], default: "customer" },
     auth_provider: {
       provider: String,
       provider_id: String
