@@ -9,7 +9,26 @@ const UserSchema = new Schema(
       provider: String,
       provider_id: String
     },
-    meta: Schema.Types.Mixed
+    meta: Schema.Types.Mixed,
+    addresses: [{
+      label: String,
+      line1: String,
+      line2: String,
+      city: String,
+      state: String,
+      postal_code: String,
+      country: String,
+      is_default: { type: Boolean, default: false }
+    }],
+    payment_methods: [{
+      provider: String,
+      token: String,
+      last4: String,
+      brand: String,
+      exp_month: Number,
+      exp_year: Number,
+      is_default: { type: Boolean, default: false }
+    }]
   },
   { timestamps: true }
 );

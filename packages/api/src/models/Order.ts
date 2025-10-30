@@ -18,7 +18,16 @@ const OrderSchema = new Schema(
     total: Number,
     currency: { type: String, default: "INR" },
     payment_status: { type: String, enum: ["pending", "paid", "refunded"], default: "pending" },
-    shipping_status: { type: String, enum: ["pending", "shipped", "delivered", "returned"], default: "pending" }
+    shipping_status: { type: String, enum: ["pending", "shipped", "delivered", "returned"], default: "pending" },
+    fraud_flag: { type: Boolean, default: false },
+    fraud_score: { type: Number, default: 0 },
+    refunds: [{
+      amount: Number,
+      currency: String,
+      reason: String,
+      status: { type: String, enum: ["requested", "approved", "rejected", "processed"], default: "requested" },
+      created_at: { type: Date, default: Date.now }
+    }]
   },
   { timestamps: true }
 );

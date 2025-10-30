@@ -13,7 +13,8 @@ export default function AnalyticsSwitch() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch((process.env.NEXT_PUBLIC_API_URL || '') + '/api/v1/features');
+        const base = process.env.NEXT_PUBLIC_API_URL || (typeof window!== 'undefined' ? `${window.location.protocol}//${window.location.hostname}:4000` : 'http://localhost:4000');
+        const res = await fetch(base + '/api/v1/features');
         if (res.ok) {
           const data = await res.json();
           setFlags(data || {});

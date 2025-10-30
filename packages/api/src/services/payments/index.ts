@@ -2,7 +2,10 @@ export interface PaymentInit { amount: number; currency: string; orderId: string
 export class PaymentService {
   async createPaymentIntent(data: PaymentInit) {
     if (data.provider === 'razorpay') {
-      return { id: 'rzp_test_intent', amount: data.amount, currency: data.currency };
+      const order_id = 'order_' + Math.random().toString(36).slice(2, 10);
+      const key_id = process.env.RAZORPAY_KEY_ID || 'rzp_test_key';
+      // amount expected in smallest currency unit for Razorpay (paise)
+      return { id: 'rzp_test_intent', provider: 'razorpay', order_id, key_id, amount: Math.round(Number(data.amount||0) * 100), currency: data.currency };
     }
     if (data.provider === 'stripe') {
       return { id: 'stripe_test_pi', amount: data.amount, currency: data.currency };

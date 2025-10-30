@@ -4,9 +4,13 @@ import { SettingsModel } from "../models/Settings";
 
 export const featuresRouter = Router();
 
-featuresRouter.get("/", requireAuth(["admin"]), async (_req, res) => {
-  const doc = await SettingsModel.findOne();
-  res.json(doc?.features || {});
+featuresRouter.get("/", async (_req, res) => {
+  try {
+    const doc = await SettingsModel.findOne();
+    return res.json(doc?.features || {});
+  } catch {
+    return res.json({});
+  }
 });
 
 featuresRouter.put("/", requireAuth(["admin"]), async (req, res) => {

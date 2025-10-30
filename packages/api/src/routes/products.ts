@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { ProductModel } from "../models/Product";
+import { ReviewModel } from "../models/Review";
 import { Schema, model } from "mongoose";
 import { requireAuth } from "../middleware/auth";
 
@@ -15,11 +16,33 @@ const ProductSequenceSchema = new (Schema as any)({
 const ProductSequenceModel = (model as any)("ProductSequence", ProductSequenceSchema);
 
 router.get("/", async (req, res) => {
-  const { category, vendor, slug, sort, limit = 20 } = req.query as any;
+  const { category, vendor, slug, sort, q, min_price, max_price, tags, min_rating, limit = 20 } = req.query as any;
   const filter: any = {};
   if (category) filter.categories = category;
   if (vendor) filter.vendor_id = vendor;
   if (slug) filter.slug = slug;
+  if (q) {
+    const rx = new RegExp(String(q).trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+    filter.$or = [{ title: rx }, { description: rx }];
+  }
+  if (min_price || max_price) {
+    filter["variants.price"] = {};
+    if (min_price) filter["variants.price"].$gte = Number(min_price);
+    if (max_price) filter["variants.price"].$lte = Number(max_price);
+  }
+  if (tags) {
+    const list = String(tags).split(",").map((t) => t.trim()).filter(Boolean);
+    if (list.length) filter.tags = { $in: list };
+  }
+  if (min_rating) {
+    const min = Number(min_rating);
+    const agg = await ReviewModel.aggregate([
+      { $group: { _id: "$product_id", avg: { $avg: "$rating" } } },
+      { $match: { avg: { $gte: min } } }
+    ]);
+    const ids = agg.map((a) => a._id);
+    filter._id = { $in: ids };
+  }
   if (sort === "sequence") {
     // fetch matching rules and order
     const rules = await ProductSequenceModel.find({}).sort({ priority: -1 });

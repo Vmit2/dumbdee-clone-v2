@@ -345,3 +345,9 @@ For support, email support@yourcompany.com or join our Slack channel.
 
 **Note**: This is a clone project for educational purposes. Please ensure you have proper rights and permissions before using any copyrighted content.
 
+
+
+<!-- # API: npm -w packages/api run dev
+# Storefront: npm -w apps/storefront run dev
+# Vendor: npm -w apps/vendor-portal run dev
+# Admin: npm -w apps/admin-portal run dev -->

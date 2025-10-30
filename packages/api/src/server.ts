@@ -20,6 +20,8 @@ import { paymentsRouter } from "./routes/payments";
 import { shippingRouter } from "./routes/shipping";
 import { notificationsRouter } from "./routes/notifications";
 import { payoutsRouter } from "./routes/payouts";
+import { customersRouter } from "./routes/customers";
+import { supportRouter } from "./routes/support";
 
 const app = express();
 app.use(helmet());
@@ -45,16 +47,22 @@ app.use("/api/v1/payments", paymentsRouter);
 app.use("/api/v1/shipping", shippingRouter);
 app.use("/api/v1/notifications", notificationsRouter);
 app.use("/api/v1/payouts", payoutsRouter);
+app.use("/api/v1/customers", customersRouter);
+app.use("/api/v1/support", supportRouter);
 
 const port = Number(process.env.PORT || 4000);
 const mongoUri = process.env.MONGO_URI || "mongodb://localhost:27017/dumbdee";
 
 async function start() {
-  await mongoose.connect(mongoUri);
   app.listen(port, () => console.log(`API listening on :${port}`));
+  try {
+    await mongoose.connect(mongoUri);
+    console.log('Mongo connected');
+  } catch (err) {
+    console.error('Mongo connection failed (continuing without DB):', err);
+  }
 }
 
 start().catch((err) => {
-  console.error(err);
-  process.exit(1);
+  console.error('Server start failed:', err);
 });

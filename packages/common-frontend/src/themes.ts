@@ -9,6 +9,17 @@ export type ThemePreset = {
 
 export const SEASONAL_THEMES: ThemePreset[] = [
   {
+    id: "dumbdee-classic",
+    name: "DumbDee Classic",
+    cssVars: {
+      "--bg": "#0b1020",
+      "--fg": "#ffffff",
+      "--primary": "#8b5cf6",
+      "--accent": "#06b6d4"
+    },
+    gradient: "bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-cyan-400"
+  },
+  {
     id: "spring-bloom",
     name: "Spring Bloom",
     cssVars: {

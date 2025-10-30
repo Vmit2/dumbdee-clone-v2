@@ -14,7 +14,8 @@ const FeaturesSchema = new Schema(
     enable_meta_pixel: { type: Boolean, default: true },
     enable_server_side_analytics: { type: Boolean, default: false },
     allow_vendor_download_template: { type: Boolean, default: true },
-    vendor_chat: { type: Boolean, default: false }
+    vendor_chat: { type: Boolean, default: false },
+    maintenance: { type: Boolean, default: false }
   },
   { _id: false }
 );

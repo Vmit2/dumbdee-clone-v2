@@ -9,8 +9,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const [themeId, setThemeId] = useState<string | null>(null);
   const theme = useMemo(() => {
     const season = process.env.NEXT_PUBLIC_SEASON || undefined;
-    const preset = themeId
-      ? SEASONAL_THEMES.find((t) => t.id === themeId) || resolveThemeBySeason(season)
+    const forcedId = process.env.NEXT_PUBLIC_THEME_ID || undefined;
+    const resolved = themeId || forcedId;
+    const preset = resolved
+      ? SEASONAL_THEMES.find((t) => t.id === resolved) || resolveThemeBySeason(season)
       : resolveThemeBySeason(season);
     return preset;
   }, [themeId]);

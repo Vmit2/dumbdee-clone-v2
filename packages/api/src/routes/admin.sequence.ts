@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { requireAuth } from "../middleware/auth";
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const ProductSequenceSchema = new Schema(
   {
@@ -12,7 +12,7 @@ const ProductSequenceSchema = new Schema(
   },
   { timestamps: true }
 );
-const ProductSequenceModel = model("ProductSequence", ProductSequenceSchema);
+const ProductSequenceModel = models.ProductSequence || model("ProductSequence", ProductSequenceSchema);
 
 export const adminSequenceRouter = Router();
 

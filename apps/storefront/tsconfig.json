@@ -22,7 +22,11 @@
         "name": "next"
       }
     ],
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@dumbdee/common-frontend": ["../../packages/common-frontend/src/index.ts"]
+    }
   },
   "include": [
     "next-env.d.ts",

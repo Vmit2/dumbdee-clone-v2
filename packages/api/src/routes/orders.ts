@@ -4,8 +4,16 @@ import { OrderModel } from "../models/Order";
 
 export const ordersRouter = Router();
 
-ordersRouter.get("/", requireAuth(["admin", "staff", "vendor"]), async (_req, res) => {
-  res.json(await OrderModel.find({}).limit(100));
+ordersRouter.get("/", requireAuth(["admin", "staff", "vendor"]), async (req, res) => {
+  const { refunds } = req.query as any;
+  const filter: any = {};
+  if (refunds === 'pending') {
+    filter.refunds = { $elemMatch: { status: { $in: ['pending','requested'] } } };
+  }
+  if (refunds === 'approved') {
+    filter.refunds = { $elemMatch: { status: 'approved' } };
+  }
+  res.json(await OrderModel.find(filter).limit(100));
 });
 
 ordersRouter.get("/mine", requireAuth(["customer"]), async (req, res) => {
@@ -28,6 +36,28 @@ ordersRouter.get("/:id", requireAuth(["admin", "staff", "vendor", "customer"]), 
 ordersRouter.put("/:id", requireAuth(["admin", "staff"]), async (req, res) => {
   const updated = await OrderModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.json(updated);
+});
+
+ordersRouter.put("/:id/fraud", requireAuth(["admin", "staff"]), async (req, res) => {
+  const { fraud_flag, fraud_score } = req.body || {};
+  const updated = await OrderModel.findByIdAndUpdate(req.params.id, { $set: { fraud_flag: !!fraud_flag, fraud_score: Number(fraud_score||0) } }, { new: true });
+  res.json(updated);
+});
+
+ordersRouter.post('/:id/refunds', requireAuth(['customer','admin','vendor']), async (req, res) => {
+  const { amount, currency, reason } = req.body || {};
+  const updated = await OrderModel.findByIdAndUpdate(req.params.id, { $push: { refunds: { amount, currency, reason, status: 'requested' } } }, { new: true });
+  res.status(201).json(updated);
+});
+
+ordersRouter.put('/:id/refunds/:idx/approve', requireAuth(['admin','staff']), async (req, res) => {
+  const order = await OrderModel.findById(req.params.id);
+  if (!order) return res.status(404).json({ error: 'not_found' });
+  const idx = Number(req.params.idx);
+  if (!order.refunds || !order.refunds[idx]) return res.status(404).json({ error: 'refund_not_found' });
+  (order as any).refunds[idx].status = 'approved';
+  await order.save();
+  res.json(order);
 });
 
 ordersRouter.delete("/:id", requireAuth(["admin"]), async (req, res) => {
