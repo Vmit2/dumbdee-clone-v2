@@ -10,4 +10,16 @@ shippingRouter.post('/rates', async (req, res) => {
   res.json(rates);
 });
 
+shippingRouter.post('/label', async (req, res) => {
+  const { provider = 'shipway', shipment } = req.body || {};
+  const label = await svc.createLabel(provider, shipment);
+  res.json(label);
+});
+
+shippingRouter.get('/track/:id', async (req, res) => {
+  const { provider = 'shipway' } = req.query as any;
+  const info = await svc.track(provider, req.params.id);
+  res.json(info);
+});
+
 
