@@ -1,0 +1,39 @@
+openapi: 3.0.3
+info:
+  title: Dumbdee Marketplace API
+  version: 0.1.0
+servers:
+  - url: http://localhost:4000
+paths:
+  /health:
+    get:
+      responses:
+        '200': { description: OK }
+  /api/v1/uploads/presign:
+    get:
+      parameters:
+        - in: query
+          name: type
+          schema: { type: string, enum: [image, video] }
+        - in: query
+          name: vendorId
+          schema: { type: string }
+        - in: query
+          name: fileName
+          schema: { type: string }
+      responses:
+        '200': { description: Presigned URL }
+  /api/v1/products:
+    get:
+      parameters:
+        - in: query
+          name: slug
+          schema: { type: string }
+      responses:
+        '200': { description: List products }
+    post:
+      responses:
+        '201': { description: Created }
+  /api/v1/admin/settings:
+    get: { responses: { '200': { description: Settings } } }
+    put: { responses: { '200': { description: Updated } } }

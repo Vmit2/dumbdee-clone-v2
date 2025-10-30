@@ -1,0 +1,27 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install
+        run: npm ci
+      - name: Build common
+        run: npm -w packages/common run build
+      - name: Build API
+        run: npm -w packages/api run build
+      - name: Build workers
+        run: npm -w packages/workers run build
+      - name: Test API
+        run: npm -w packages/api test -- --passWithNoTests
+      - name: Test workers
+        run: npm -w packages/workers test -- --passWithNoTests

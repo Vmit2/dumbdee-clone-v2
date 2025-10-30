@@ -1,0 +1,19 @@
+{
+  "name": "dumbdee-marketplace-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm -w packages/api run build && npm -w packages/workers run build",
+    "dev": "concurrently \"npm -w packages/api run dev\" \"npm -w packages/workers run dev\"",
+    "test": "npm -w packages/api test && npm -w packages/workers test",
+    "lint": "echo 'add eslint later'",
+    "e2e": "playwright test"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "playwright": "^1.48.0"
+  }
+}
