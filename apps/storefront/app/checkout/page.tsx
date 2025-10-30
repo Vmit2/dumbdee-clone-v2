@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 export default function CheckoutPage() {
   const items = useSelector((s: RootState) => (s as any).cart.items);
   const [message, setMessage] = useState('');
+  const [coupon, setCoupon] = useState('');
+  const [discount, setDiscount] = useState<number>(0);
   const [totals, setTotals] = useState<{subtotal:number; tax:number; shipping:number; total:number; currency:string}>({subtotal:0,tax:0,shipping:0,total:0,currency:'INR'});
 
   useEffect(() => {
@@ -16,6 +18,19 @@ export default function CheckoutPage() {
       } catch {}
     })();
   }, [items]);
+
+  async function applyCoupon() {
+    setDiscount(0);
+    if (!coupon) return;
+    const res = await fetch((process.env.NEXT_PUBLIC_API_URL || '') + '/api/v1/coupons?code=' + encodeURIComponent(coupon));
+    const list = await res.json();
+    const c = Array.isArray(list) ? list[0] : null;
+    if (!c || c.active === false) { setMessage('Invalid coupon'); return; }
+    let d = 0;
+    if (c.type === 'percent') d = Math.round((totals.subtotal * (c.value || 0) / 100) * 100) / 100;
+    else d = Number(c.value || 0);
+    setDiscount(d);
+  }
 
   async function getRates() {
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/v1/shipping/rates', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ provider: 'shipway', currency: 'INR' }) });
@@ -34,9 +49,14 @@ export default function CheckoutPage() {
       <h1 className="text-2xl font-semibold">Checkout</h1>
       <div>
         <div>Subtotal: {totals.subtotal} {totals.currency}</div>
+        {discount > 0 && <div className="text-green-700">Discount: -{discount} {totals.currency}</div>}
         <div>Tax: {totals.tax} {totals.currency}</div>
         <div>Shipping: {totals.shipping} {totals.currency}</div>
-        <div className="font-semibold">Total: {totals.total} {totals.currency}</div>
+        <div className="font-semibold">Total: {Math.max(0, Math.round((totals.total - discount)*100)/100)} {totals.currency}</div>
+      </div>
+      <div className="flex gap-2 items-center">
+        <input className="border px-2 py-1 rounded" placeholder="Coupon code" value={coupon} onChange={(e)=>setCoupon(e.target.value)} />
+        <button onClick={applyCoupon} className="border px-3 py-1 rounded">Apply</button>
       </div>
       <div className="flex gap-2">
         <button onClick={getRates} className="border px-3 py-1 rounded">Get Shipping Rates</button>
